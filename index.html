@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>罗德岛随机挑战终端 // Arknights Challenge Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -15,10 +16,10 @@
                             bg: '#121212',
                             dark: '#1a1a1a',
                             panel: '#222222',
-                            cyan: '#00ADB5', // 罗德岛青
-                            yellow: '#F7C74A', // 强调黄
-                            red: '#E74C3C', // 警告红
-                            pink: '#FF69B4', // 变态级粉色
+                            cyan: '#00ADB5',
+                            yellow: '#F7C74A',
+                            red: '#E74C3C',
+                            pink: '#FF69B4',
                             text: '#E0E0E0',
                             muted: '#7A7A7A'
                         }
@@ -35,174 +36,12 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            /* 模拟 CRT 显示器扫描线效果 */
-            .bg-scanlines {
-                position: relative;
-            }
-            .bg-scanlines::before {
-                content: "";
-                position: absolute;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06));
-                background-size: 100% 2px, 3px 100%;
-                pointer-events: none;
-                z-index: 10;
-                opacity: 0.6;
-            }
-            /* 文本故障闪烁效果 */
-            .glitch-text:hover {
-                text-shadow: 2px 0 #E74C3C, -2px 0 #00ADB5;
-                animation: glitch 0.5s infinite;
-            }
-            @keyframes glitch {
-                0% { text-shadow: 1px 0 #E74C3C, -1px 0 #00ADB5; }
-                25% { text-shadow: -1px 0 #E74C3C, 1px 0 #00ADB5; }
-                50% { text-shadow: 2px 0 #E74C3C, -2px 0 #00ADB5; }
-                75% { text-shadow: -2px 0 #E74C3C, 2px 0 #00ADB5; }
-                100% { text-shadow: 1px 0 #E74C3C, -1px 0 #00ADB5; }
-            }
-            /* 打字机光标效果 */
-            .typing-cursor::after {
-                content: '_';
-                animation: blink 1s step-end infinite;
-            }
-            @keyframes blink {
-                50% { opacity: 0; }
-            }
-            /* 难度选项样式 */
-            .difficulty-option-easy {
-                color: #4ade80;
-                font-weight: bold;
-            }
-            .difficulty-option-normal {
-                color: #60a5fa;
-                font-weight: bold;
-            }
-            .difficulty-option-hard {
-                color: #a855f7;
-                font-weight: bold;
-            }
-            .difficulty-option-insane {
-                color: #ff69b4;
-                font-weight: bold;
-            }
-            /* 开关样式（可交互） */
-            .toggle-switch {
-                position: relative;
-                display: inline-block;
-                width: 48px; /* 放大开关宽度 */
-                height: 24px; /* 放大开关高度 */
-            }
-            .toggle-switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-            .toggle-slider {
-                position: absolute;
-                cursor: pointer; /* 可交互光标 */
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #333;
-                transition: .4s;
-                border-radius: 24px; /* 对应高度 */
-                border: 1px solid #00ADB5;
-            }
-            .toggle-slider:before {
-                position: absolute;
-                content: "";
-                height: 18px; /* 放大滑块 */
-                width: 18px; /* 放大滑块 */
-                left: 2px;
-                bottom: 2px;
-                background-color: #00ADB5;
-                transition: .4s;
-                border-radius: 50%;
-            }
-            input:checked + .toggle-slider {
-                background-color: #00ADB533;
-            }
-            input:checked + .toggle-slider:before {
-                transform: translateX(24px); /* 对应宽度变化 */
-            }
-            /* 自定义弹窗样式 */
-            .modal-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 1000;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
-            }
-            .modal-overlay.active {
-                opacity: 1;
-                pointer-events: all;
-            }
-            .modal-content {
-                background-color: #1a1a1a;
-                border: 2px solid #00ADB5;
-                border-radius: 8px;
-                padding: 20px;
-                width: 90%;
-                max-width: 400px;
-                font-family: 'JetBrains Mono', monospace;
-                box-shadow: 0 0 15px rgba(0, 173, 181, 0.5);
-                transform: translateY(-20px);
-                transition: transform 0.3s ease;
-            }
-            .modal-overlay.active .modal-content {
-                transform: translateY(0);
-            }
-            .modal-title {
-                color: #00ADB5;
-                font-size: 18px;
-                font-weight: bold;
-                margin-bottom: 12px;
-                border-bottom: 1px solid #222;
-                padding-bottom: 8px;
-            }
-            .modal-message {
-                color: #E0E0E0;
-                font-size: 14px;
-                line-height: 1.6;
-                margin-bottom: 16px;
-            }
-            .modal-close {
-                background-color: #00ADB5;
-                color: #121212;
-                border: none;
-                border-radius: 4px;
-                padding: 8px 16px;
-                font-family: 'JetBrains Mono', monospace;
-                font-weight: bold;
-                cursor: pointer;
-                transition: background-color 0.2s ease;
-                width: 100%;
-            }
-            .modal-close:hover {
-                background-color: #00c4cc;
-                box-shadow: 0 0 10px rgba(0, 173, 181, 0.5);
-            }
-        }
-    </style>
 </head>
 <body class="bg-ark-bg text-ark-text font-mono min-h-screen flex flex-col items-center p-4 relative overflow-y-auto pb-20">
     <div class="absolute inset-0 bg-scanlines pointer-events-none"></div>
     <div class="absolute top-0 left-0 w-full h-1 bg-ark-cyan opacity-50 shadow-neon-cyan"></div>
     <div class="absolute bottom-0 right-0 w-3/4 h-64 bg-ark-cyan opacity-5 blur-[150px] rounded-full pointer-events-none"></div>
 
-    <!-- 自定义弹窗 -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
             <div class="modal-title" id="modalTitle">规则变更提示</div>
@@ -239,20 +78,16 @@
             </div>
         </header>
 
-        <!-- 难度选择区域 -->
         <div class="border-l-4 border-ark-yellow pl-4 bg-ark-panel/50 p-3 mb-6">
             <h2 class="text-ark-muted text-sm uppercase tracking-widest mb-1">选择挑战难度</h2>
             <select id="difficulty-select" class="bg-ark-panel border border-ark-cyan text-ark-text px-4 py-2 rounded font-mono text-2xl font-bold uppercase w-full focus:outline-none focus:ring-2 focus:ring-ark-cyan">
-                <!-- 修改：初级限制作战 → 简单级限制作战 -->
                 <option value="easy" class="difficulty-option-easy">简单级限制作战</option>
-                <!-- 修改：中级限制作战 → 普通级限制作战 -->
                 <option value="normal" class="difficulty-option-normal">普通级限制作战</option>
                 <option value="hard" class="difficulty-option-hard">困难级限制作战</option>
                 <option value="insane" class="difficulty-option-insane">变态级限制作战</option>
             </select>
         </div>
 
-        <!-- 规则开关区域（可交互） -->
         <div class="bg-ark-panel/50 border border-ark-panel rounded p-4 mb-6">
             <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
                 <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战规则说明
@@ -275,33 +110,25 @@
             </div>
         </div>
 
-        <!-- 初始提示 -->
         <div id="initial-tip" class="text-center py-8">
             <p class="text-ark-muted text-lg">选择难度后，点击下方按钮抽取关卡或限制条件</p>
         </div>
 
-        <!-- 挑战结果区域：限制条件放在关卡上面（关键调整） -->
         <div id="result-panel" class="hidden space-y-6">
-            <!-- 限制条件区域（移到上方） -->
             <div>
                 <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
                     <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战限制条件
                 </h3>
-                <div id="constraints-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- 约束条件将动态生成在这里 -->
-                </div>
+                <div id="constraints-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
-            <!-- 单独的挑战关卡区域（移到下方） -->
             <div id="level-container"></div>
         </div>
 
-        <!-- 生成按钮区域：移除一键生成按钮 -->
         <div class="mt-10 pt-6 border-t border-ark-panel flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="text-xs text-ark-muted font-mono">
                 <span class="typing-cursor">SYSTEM READY. WAITING FOR INPUT.</span>
             </div>
             <div class="flex gap-4 items-center flex-wrap justify-center">
-                <!-- 移动端作者主页跳转按钮 -->
                 <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="md:hidden flex items-center gap-2 bg-ark-panel border border-ark-cyan px-5 py-3 rounded text-base hover:bg-ark-cyan/10 transition-colors">
                     <svg class="w-6 h-6 text-ark-cyan" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
@@ -311,12 +138,10 @@
                     </svg>
                     <span>作者主页</span>
                 </a>
-                <!-- 抽取限制条件按钮 -->
                 <button id="generate-constraints-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
                     <span class="relative z-10">抽取条件</span>
                     <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                 </button>
-                <!-- 抽取关卡按钮 -->
                 <button id="generate-level-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
                     <span class="relative z-10">抽取关卡</span>
                     <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
@@ -324,14 +149,12 @@
             </div>
         </div>
 
-        <!-- 历史记录区域 -->
         <div class="mt-6">
             <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
                 <span class="w-2 h-2 bg-ark-cyan mr-2"></span>演算历史
             </h3>
             <div id="history-panel" class="bg-ark-panel/50 rounded border border-ark-panel p-4 space-y-2">
                 <p class="text-ark-muted text-center" id="empty-history">暂无演算记录</p>
-                <!-- 历史记录会动态生成在这里 -->
             </div>
         </div>
     </main>
@@ -340,441 +163,6 @@
         <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="text-ark-cyan hover:underline pointer-events-auto">哔哩哔哩关注朝阳逆光喵，谢谢喵</a>
     </footer>
 
-    <script>
-        // 词条库
-        const entryLibrary = {
-            green: [
-                "3星及以下", "4-5星", "非6星", "5星及以下", 
-                "0级", "不满信赖", "异格" // 新增：异格（绿色词条）
-            ],
-            blue: [
-                "4星及以上", "6星", "精一", "医疗", "先锋", "近卫", 
-                "狙击", "术士", "重装", "辅助", "特种", "罗德岛", 
-                "龙门", "拉特兰", "乌萨斯", "萨卡兹", "猫科", "犬科", "鸟类"
-            ],
-            purple: [
-                "专三", "没专三过", "满信赖", "限定", "限定6星", "周年庆", 
-                "夏活", "赠送", "联动", "女性", "男性", "近战", "远程", 
-                "高台", "地面", "医疗或先锋", "医疗或近卫", "医疗或狙击", 
-                "医疗或术士", "医疗或重装", "医疗或辅助", "医疗或特种", 
-                "先锋或近卫", "先锋或狙击", "先锋或术士", "先锋或重装", 
-                "先锋或辅助", "先锋或特种", "近卫或狙击", "近卫或术士", 
-                "近卫或重装", "近卫或辅助", "近卫或特种", "狙击或术士", 
-                "狙击或重装", "狙击或辅助", "狙击或特种", "术士或重装", 
-                "术士或辅助", "术士或特种", "重装或辅助", "重装或特种", 
-                "辅助或特种", "非异格" // 新增：非异格（紫色词条）
-            ],
-            orange: [
-                "非限定", "非限定6星", "非周年庆", "非夏活", "非赠送", 
-                "非联动", "精二", "满级", "群攻型", "单体型", "可同时群攻和单体", 
-                "技能群攻型", "技能对单型", "攻击距离超过一格", "攻击距离没超过一格", 
-                "带攻击回复技能", "带自动回复技能", "带受击回复技能", "带攻击型技能", 
-                "带buff型技能", "带全地图范围型技能"
-            ],
-            red: [  // 困难词条
-                "蓝色居多", "粉色居多", "红色居多", "黄色居多", "白色居多", 
-                "绿色居多", "暖色系", "冷色系", "身高160cm以下", "长角", "没长角", 
-                "拥有限定皮肤", "身高160cm以上", "戴手套", "不戴手套", "带餐具", 
-                "有尾巴", "没尾巴", "带吃的", "不带吃的", "只有一个皮肤", "没有皮肤", 
-                "至少两个皮肤", "光滑的", "使用冷兵器", "使用热兵器", "不使用兵器", 
-                "有兵器但不用", "使用多个兵器", "穿铠甲", "穿裙子", "穿帽子", "戴眼镜", 
-                "戴口罩", "嘴上叼东西", "有动态皮肤", "蓝色眼睛", "红色眼睛", "闭眼睛", 
-                "没头发", "非人型", "岛上有亲戚", "语音声音大", "语音声音小", 
-                "2020年以前登岛", "2020年以后登岛", "白头发", "粉头发", "黄头发", 
-                "绿头发", "不喜欢说话", "话痨", "有光污染"
-            ],
-            insane: [ // 变态级词条（服饰相关）
-                "光脚", "短袜", "黑丝", "白丝", 
-                "高跟鞋", "板鞋", "拖鞋", "长筒靴"
-            ],
-            levels: [ // 关卡词条
-                "当期活动1关", "当期活动2关", "当期活动3关", "当期活动4关",
-                "当期活动5关", "当期活动6关", "当期活动7关", "当期活动8关",
-                "当期活动EX1关", "当期活动EX2关", "当期活动EX3关", "当期活动EX4关",
-                "当期活动EX5关", "当期活动EX6关", "当期活动EX7关", "当期活动EX8关"
-            ]
-        };
-
-        // === 全局状态管理（关键：分离关卡和条件的状态） ===
-        let currentDifficulty = 'easy'; // 当前选择的难度
-        let currentLevel = null; // 当前抽取的关卡
-        let currentConstraints = null; // 当前抽取的限制条件
-        let historyRecords = []; // 历史记录（存储关卡+条件的组合）
-
-        // 获取所有非困难词条
-        const getAllNormalEntries = () => {
-            try {
-                return [
-                    ...entryLibrary.green.map(item => ({ text: item, color: 'green', type: 'forbid' })),
-                    ...entryLibrary.blue.map(item => ({ text: item, color: 'blue', type: 'forbid' })),
-                    ...entryLibrary.purple.map(item => ({ text: item, color: 'purple', type: 'forbid' })),
-                    ...entryLibrary.orange.map(item => ({ text: item, color: 'orange', type: 'forbid' }))
-                ];
-            } catch (e) {
-                console.error("获取普通词条失败:", e);
-                return [{ text: "3星及以下", color: "green", type: 'forbid' }];
-            }
-        };
-
-        // 获取困难词条
-        const getAllHardEntries = () => {
-            try {
-                return entryLibrary.red.map(item => ({ text: item, color: 'red', type: 'forbid' }));
-            } catch (e) {
-                console.error("获取困难词条失败:", e);
-                return [{ text: "长角", color: "red", type: 'forbid' }];
-            }
-        };
-
-        // 获取变态级词条
-        const getInsaneEntries = () => {
-            try {
-                return entryLibrary.insane.map(item => ({ text: item, color: 'pink', type: 'allow' }));
-            } catch (e) {
-                console.error("获取变态级词条失败:", e);
-                return [{ text: "黑丝", color: "pink", type: 'allow' }];
-            }
-        };
-
-        // 获取关卡词条
-        const getLevelEntries = () => {
-            try {
-                return entryLibrary.levels.map(item => ({ text: item, color: 'yellow', type: 'level' }));
-            } catch (e) {
-                console.error("获取关卡词条失败:", e);
-                return [{ text: "当期活动1关", color: "yellow", type: 'level' }];
-            }
-        };
-
-        // 工具函数：随机获取数组中的一个元素
-        const getRandom = (arr) => {
-            if (!arr || arr.length === 0) return { text: "默认限制", color: "green", type: 'forbid' };
-            return arr[Math.floor(Math.random() * arr.length)];
-        };
-        
-        // 工具函数：随机获取数组中的N个不重复元素
-        const getRandomSet = (arr, n) => {
-            if (!arr || arr.length === 0) return [{ text: "默认限制", color: "green", type: 'forbid' }];
-            if (arr.length <= n) return [...arr];
-            const shuffled = [...arr].sort(() => Math.random() - 0.5);
-            return shuffled.slice(0, n);
-        };
-
-        // === 独立的生成函数（关键：拆分关卡和条件的生成） ===
-        // 生成关卡（独立函数）
-        const generateLevel = () => {
-            try {
-                const levelEntry = getRandom(getLevelEntries());
-                currentLevel = levelEntry; // 更新当前关卡状态
-                return levelEntry;
-            } catch (e) {
-                console.error("生成关卡失败:", e);
-                const defaultLevel = { text: "当期活动1关", color: "yellow", type: 'level' };
-                currentLevel = defaultLevel;
-                return defaultLevel;
-            }
-        };
-
-        // 生成限制条件（独立函数，根据当前难度）
-        const generateConstraints = () => {
-            try {
-                let constraints = [];
-                switch(currentDifficulty) {
-                    case 'easy':
-                        // 简单：1个非困难词条（禁止使用）
-                        constraints.push(getRandom(getAllNormalEntries()));
-                        break;
-                    case 'normal':
-                        // 普通：2个非困难词条（禁止使用）
-                        constraints.push(...getRandomSet(getAllNormalEntries(), 2));
-                        break;
-                    case 'hard':
-                        // 困难：2个困难词条 + 1个其他词条（禁止使用）
-                        const hardEntries = getAllHardEntries();
-                        const normalEntries = getAllNormalEntries();
-                        // 从困难词条中随机选择2个
-                        constraints.push(...getRandomSet(hardEntries, 2));
-                        // 从其他词条中随机选择1个
-                        constraints.push(getRandom(normalEntries));
-                        break;
-                    case 'insane':
-                        // 变态：1个服饰词条（只能使用）
-                        constraints.push(getRandom(getInsaneEntries()));
-                        break;
-                }
-                currentConstraints = constraints; // 更新当前条件状态
-                return constraints;
-            } catch (e) {
-                console.error("生成限制条件失败:", e);
-                const defaultConstraints = [{ text: "3星及以下", color: "green", type: 'forbid' }];
-                currentConstraints = defaultConstraints;
-                return defaultConstraints;
-            }
-        };
-
-        // DOM 元素引用
-        const difficultySelect = document.getElementById('difficulty-select');
-        const initialTip = document.getElementById('initial-tip');
-        const resultPanel = document.getElementById('result-panel');
-        const levelContainer = document.getElementById('level-container');
-        const constraintsContainer = document.getElementById('constraints-container');
-        const typingCursor = document.querySelector('.typing-cursor');
-        const historyPanel = document.getElementById('history-panel');
-        const skinIllustSwitch = document.getElementById('skinIllustSwitch');
-        const unownedSkinSwitch = document.getElementById('unownedSkinSwitch');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalMessage = document.getElementById('modalMessage');
-        const modalClose = document.getElementById('modalClose');
-        // 按钮引用
-        const generateLevelBtn = document.getElementById('generate-level-btn');
-        const generateConstraintsBtn = document.getElementById('generate-constraints-btn');
-
-        // 难度颜色映射
-        const difficultyColorMap = {
-            easy: '#4ade80',    // 初级-绿色 → 简单级-绿色
-            normal: '#60a5fa',  // 中级-蓝色 → 普通级-蓝色
-            hard: '#a855f7',    // 困难-紫色
-            insane: '#ff69b4'   // 变态-粉色
-        };
-
-        // 设置选择框选中项颜色
-        const setDifficultySelectColor = (value) => {
-            if (!difficultySelect) return;
-            difficultySelect.style.color = difficultyColorMap[value] || '#E0E0E0';
-        };
-
-        // 根据颜色获取对应的CSS类
-        const getColorClass = (color) => {
-            const colorMap = {
-                green: 'text-green-400',
-                blue: 'text-blue-400',
-                purple: 'text-purple-400',
-                orange: 'text-orange-400',
-                red: 'text-red-500 font-bold',
-                pink: 'text-pink-500 font-bold',
-                yellow: 'text-yellow-400 font-bold' // 关卡颜色
-            };
-            return colorMap[color] || 'text-ark-text';
-        };
-
-        // 根据难度获取信息（修改：更新文本为新的难度名称）
-        const getDifficultyInfo = (difficulty) => {
-            const difficultyMap = {
-                easy: { text: '简单级限制作战', class: 'bg-green-900/30 text-green-400 border border-green-900/50', name: '简单级限制作战' },
-                normal: { text: '普通级限制作战', class: 'bg-blue-900/30 text-blue-400 border border-blue-900/50', name: '普通级限制作战' },
-                hard: { text: '困难级限制作战', class: 'bg-purple-900/30 text-purple-400 border border-purple-900/50', name: '困难级限制作战' },
-                insane: { text: '变态级限制作战', class: 'bg-pink-900/30 text-pink-400 border border-pink-900/50', name: '变态级限制作战' }
-            };
-            return difficultyMap[difficulty] || difficultyMap.normal;
-        };
-
-        // 渲染挑战关卡
-        const renderLevel = (level) => {
-            if (!levelContainer || !level) return;
-            levelContainer.innerHTML = '';
-            
-            const levelEl = document.createElement('div');
-            levelEl.className = "bg-ark-panel p-4 rounded border border-ark-panel hover:border-ark-cyan transition-colors group relative overflow-hidden";
-            
-            const iconSvg = `
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ark-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-            `;
-            
-            levelEl.innerHTML = `
-                <div class="absolute right-0 top-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                    ${iconSvg}
-                </div>
-                <h3 class="text-ark-cyan text-sm font-bold mb-2 flex items-center">
-                    <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战关卡
-                </h3>
-                <p class="text-lg ${getColorClass(level.color)}">挑战关卡【${level.text}】</p>
-            `;
-            
-            levelContainer.appendChild(levelEl);
-        };
-
-        // 渲染限制条件
-        const renderConstraints = (constraints) => {
-            if (!constraintsContainer || !constraints) return;
-            constraintsContainer.innerHTML = '';
-            
-            constraints.forEach((constraint, index) => {
-                const constraintEl = document.createElement('div');
-                constraintEl.className = "bg-ark-panel p-4 rounded border border-ark-panel hover:border-ark-cyan transition-colors group relative overflow-hidden";
-                
-                let textPrefix, iconSvg;
-                if (constraint.type === 'allow') {
-                    textPrefix = '只能使用';
-                    iconSvg = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ark-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                    `;
-                } else { // forbid
-                    textPrefix = '禁止使用';
-                    iconSvg = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ark-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    `;
-                }
-                
-                constraintEl.innerHTML = `
-                    <div class="absolute right-0 top-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                        ${iconSvg}
-                    </div>
-                    <h3 class="text-ark-cyan text-sm font-bold mb-2 flex items-center">
-                        <span class="w-2 h-2 bg-ark-cyan mr-2"></span>限制条件 ${index + 1}
-                    </h3>
-                    <p class="text-lg ${getColorClass(constraint.color)}">${textPrefix}【${constraint.text}】干员</p>
-                `;
-                
-                constraintsContainer.appendChild(constraintEl);
-            });
-        };
-
-        // 渲染历史记录（保留最多3条）
-        const renderHistory = () => {
-            if (!historyPanel) return;
-            historyPanel.innerHTML = '';
-            
-            if (historyRecords.length === 0) {
-                historyPanel.innerHTML = '<p class="text-ark-muted text-center" id="empty-history">暂无演算记录</p>';
-                return;
-            }
-
-            historyRecords.forEach((record, index) => {
-                const difficultyInfo = getDifficultyInfo(record.difficulty);
-                const recordEl = document.createElement('div');
-                recordEl.className = 'border-b border-ark-panel pb-2 last:border-0 last:pb-0';
-                
-                // 拼接关卡和限制条件的HTML
-                let constraintsHtml = `
-                    <p class="text-xs ${getColorClass(record.constraints[0].color)} mt-1">▸ 限制条件：${record.constraints.map(c => (c.type === 'allow' ? '只能使用' : '禁止使用') + '【' + c.text + '】').join('、')}</p>
-                    <p class="text-xs ${getColorClass(record.level.color)} mt-1">▸ 关卡：挑战关卡【${record.level.text}】</p>
-                `;
-                
-                recordEl.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm text-ark-yellow">#${index + 1} ${record.title}</p>
-                        <span class="text-xs px-2 py-0.5 rounded ${difficultyInfo.class}">${difficultyInfo.text}</span>
-                    </div>
-                    ${constraintsHtml}
-                `;
-                
-                historyPanel.appendChild(recordEl);
-            });
-        };
-
-        // 添加记录到历史（存储当前的关卡+条件组合）
-        const addToHistory = () => {
-            if (!currentLevel || !currentConstraints) return; // 必须同时有关卡和条件才记录
-            const difficultyInfo = getDifficultyInfo(currentDifficulty);
-            const record = {
-                difficulty: currentDifficulty,
-                title: difficultyInfo.name,
-                level: currentLevel,
-                constraints: currentConstraints
-            };
-            historyRecords.unshift(record);
-            if (historyRecords.length > 3) {
-                historyRecords.pop(); // 最多保留3条
-            }
-            renderHistory();
-        };
-
-        // 弹窗控制函数
-        const showModal = (title, message) => {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            modalOverlay.classList.add('active');
-        };
-
-        const hideModal = () => {
-            modalOverlay.classList.remove('active');
-        };
-
-        // === 事件监听 ===
-        // 难度选择变化
-        difficultySelect.addEventListener('change', (e) => {
-            currentDifficulty = e.target.value;
-            setDifficultySelectColor(currentDifficulty);
-            // 难度变化后，清空当前状态
-            currentLevel = null;
-            currentConstraints = null;
-            resultPanel.classList.add('hidden');
-            initialTip.classList.remove('hidden');
-            typingCursor.textContent = "DIFFICULTY UPDATED. PLEASE REGENERATE.";
-        });
-
-        // 开关事件
-        skinIllustSwitch.addEventListener('change', () => {
-            const isChecked = skinIllustSwitch.checked;
-            const message = isChecked 
-                ? '挑战中可以包括皮肤和立绘' 
-                : '挑战中不可以包括皮肤和立绘';
-            showModal('皮肤和立绘规则变更', message);
-        });
-
-        unownedSkinSwitch.addEventListener('change', () => {
-            const isChecked = unownedSkinSwitch.checked;
-            const message = isChecked 
-                ? '挑战中可以包括未拥有的皮肤' 
-                : '挑战中不可以包括未拥有的皮肤';
-            showModal('未拥有皮肤规则变更', message);
-        });
-
-        // 弹窗关闭
-        modalClose.addEventListener('click', hideModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                hideModal();
-            }
-        });
-
-        // 抽取关卡按钮点击事件
-        generateLevelBtn.addEventListener('click', () => {
-            // 显示结果面板，隐藏初始提示
-            resultPanel.classList.remove('hidden');
-            initialTip.classList.add('hidden');
-            
-            // 快速生成并渲染关卡（移除不必要的延迟）
-            const level = generateLevel();
-            renderLevel(level);
-            
-            // 更新状态文本
-            typingCursor.textContent = "LEVEL GENERATED. " + new Date().toLocaleTimeString();
-            
-            // 如果已有条件，则添加到历史
-            if (currentConstraints) {
-                addToHistory();
-            }
-        });
-
-        // 抽取限制条件按钮点击事件
-        generateConstraintsBtn.addEventListener('click', () => {
-            // 显示结果面板，隐藏初始提示
-            resultPanel.classList.remove('hidden');
-            initialTip.classList.add('hidden');
-            
-            // 快速生成并渲染限制条件（移除不必要的延迟）
-            const constraints = generateConstraints();
-            renderConstraints(constraints);
-            
-            // 更新状态文本
-            typingCursor.textContent = "CONSTRAINTS GENERATED. " + new Date().toLocaleTimeString();
-            
-            // 如果已有关卡，则添加到历史
-            if (currentLevel) {
-                addToHistory();
-            }
-        });
-
-        // 初始化
-        setDifficultySelectColor(currentDifficulty);
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
