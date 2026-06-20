@@ -9,8 +9,8 @@ export const getAllNormalEntries = () => {
             ...entryLibrary.orange.map(item => ({ text: item, color: 'orange', type: 'forbid' }))
         ];
     } catch (e) {
-        console.error("获取普通词条失败:", e);
-        return [{ text: "3星及以下", color: "green", type: 'forbid' }];
+        console.error("Failed to load normal entries:", e);
+        return [{ text: "3 stars or below", color: "green", type: 'forbid' }];
     }
 };
 
@@ -18,17 +18,8 @@ export const getAllHardEntries = () => {
     try {
         return entryLibrary.red.map(item => ({ text: item, color: 'red', type: 'forbid' }));
     } catch (e) {
-        console.error("获取困难词条失败:", e);
-        return [{ text: "长角", color: "red", type: 'forbid' }];
-    }
-};
-
-export const getInsaneEntries = () => {
-    try {
-        return entryLibrary.insane.map(item => ({ text: item, color: 'pink', type: 'allow' }));
-    } catch (e) {
-        console.error("获取变态级词条失败:", e);
-        return [{ text: "黑丝", color: "pink", type: 'allow' }];
+        console.error("Failed to load hard entries:", e);
+        return [{ text: "Has horns", color: "red", type: 'forbid' }];
     }
 };
 
@@ -36,7 +27,7 @@ export const getLevelEntries = () => {
     try {
         return entryLibrary.levels.map(item => ({ text: item, color: 'yellow', type: 'level' }));
     } catch (e) {
-        console.error("获取关卡词条失败:", e);
-        return [{ text: "当期活动1关", color: "yellow", type: 'level' }];
+        console.error("Failed to load stage entries:", e);
+        return [{ text: "Current event Stage 1", color: "yellow", type: 'level' }];
     }
 };

@@ -1,4 +1,5 @@
 import { difficultyColorMap } from './config/constants.js';
+import { MAIN_SITE_URL } from './config/site.js';
 import { generateLevel, generateConstraints } from './generators.js';
 import { renderLevel, renderConstraints, addToHistory } from './render.js';
 import { state } from './state.js';
@@ -20,6 +21,11 @@ const modalClose = document.getElementById('modalClose');
 const generateLevelBtn = document.getElementById('generate-level-btn');
 const generateConstraintsBtn = document.getElementById('generate-constraints-btn');
 
+for (const id of ['main-site-link', 'main-site-link-mobile']) {
+    const link = document.getElementById(id);
+    if (link) link.href = MAIN_SITE_URL;
+}
+
 const { showModal, hideModal } = createModal({ modalOverlay, modalTitle, modalMessage });
 
 const setDifficultySelectColor = (value) => {
@@ -40,17 +46,17 @@ difficultySelect.addEventListener('change', (e) => {
 skinIllustSwitch.addEventListener('change', () => {
     const isChecked = skinIllustSwitch.checked;
     const message = isChecked
-        ? '挑战中可以包括皮肤和立绘'
-        : '挑战中不可以包括皮肤和立绘';
-    showModal('皮肤和立绘规则变更', message);
+        ? 'Skins and illustrations are allowed in this challenge.'
+        : 'Skins and illustrations are not allowed in this challenge.';
+    showModal('Skins & Illustrations Rule Changed', message);
 });
 
 unownedSkinSwitch.addEventListener('change', () => {
     const isChecked = unownedSkinSwitch.checked;
     const message = isChecked
-        ? '挑战中可以包括未拥有的皮肤'
-        : '挑战中不可以包括未拥有的皮肤';
-    showModal('未拥有皮肤规则变更', message);
+        ? 'Unowned skins are allowed in this challenge.'
+        : 'Unowned skins are not allowed in this challenge.';
+    showModal('Unowned Skins Rule Changed', message);
 });
 
 modalClose.addEventListener('click', hideModal);
@@ -67,7 +73,7 @@ generateLevelBtn.addEventListener('click', () => {
     const level = generateLevel();
     renderLevel(level, levelContainer);
 
-    typingCursor.textContent = "LEVEL GENERATED. " + new Date().toLocaleTimeString();
+    typingCursor.textContent = "STAGE GENERATED. " + new Date().toLocaleTimeString();
 
     if (state.currentConstraints) {
         addToHistory(historyPanel);
@@ -81,7 +87,7 @@ generateConstraintsBtn.addEventListener('click', () => {
     const constraints = generateConstraints();
     renderConstraints(constraints, constraintsContainer);
 
-    typingCursor.textContent = "CONSTRAINTS GENERATED. " + new Date().toLocaleTimeString();
+    typingCursor.textContent = "RESTRICTIONS GENERATED. " + new Date().toLocaleTimeString();
 
     if (state.currentLevel) {
         addToHistory(historyPanel);

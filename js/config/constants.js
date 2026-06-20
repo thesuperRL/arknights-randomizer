@@ -1,8 +1,7 @@
 export const difficultyColorMap = {
     easy: '#4ade80',
     normal: '#60a5fa',
-    hard: '#a855f7',
-    insane: '#ff69b4'
+    hard: '#a855f7'
 };
 
 export const getColorClass = (color) => {
@@ -20,10 +19,9 @@ export const getColorClass = (color) => {
 
 export const getDifficultyInfo = (difficulty) => {
     const difficultyMap = {
-        easy: { text: '简单级限制作战', class: 'bg-green-900/30 text-green-400 border border-green-900/50', name: '简单级限制作战' },
-        normal: { text: '普通级限制作战', class: 'bg-blue-900/30 text-blue-400 border border-blue-900/50', name: '普通级限制作战' },
-        hard: { text: '困难级限制作战', class: 'bg-purple-900/30 text-purple-400 border border-purple-900/50', name: '困难级限制作战' },
-        insane: { text: '变态级限制作战', class: 'bg-pink-900/30 text-pink-400 border border-pink-900/50', name: '变态级限制作战' }
+        easy: { text: 'Easy Tier', class: 'bg-green-900/30 text-green-400 border border-green-900/50', name: 'Easy Tier Restricted Ops' },
+        normal: { text: 'Normal Tier', class: 'bg-blue-900/30 text-blue-400 border border-blue-900/50', name: 'Normal Tier Restricted Ops' },
+        hard: { text: 'Hard Tier', class: 'bg-purple-900/30 text-purple-400 border border-purple-900/50', name: 'Hard Tier Restricted Ops' }
     };
     return difficultyMap[difficulty] || difficultyMap.normal;
 };

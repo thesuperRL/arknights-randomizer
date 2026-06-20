@@ -1,52 +1,59 @@
 export const entryLibrary = {
     green: [
-        "3星及以下", "4-5星", "非6星", "5星及以下",
-        "0级", "不满信赖", "异格"
+        "3 stars or below", "4-5 stars", "Non-6★", "5 stars or below",
+        "1-2 stars", "3★ only", "4★ only", "5★ only",
+        "Level 0", "Trust not maxed", "Alter", "Unpromoted", "No module"
     ],
     blue: [
-        "4星及以上", "6星", "精一", "医疗", "先锋", "近卫",
-        "狙击", "术士", "重装", "辅助", "特种", "罗德岛",
-        "龙门", "拉特兰", "乌萨斯", "萨卡兹", "猫科", "犬科", "鸟类"
+        "4 stars or above", "6★", "Elite 1", "Medic", "Vanguard", "Guard",
+        "Sniper", "Caster", "Defender", "Supporter", "Specialist", "Rhodes Island",
+        "Lungmen", "Laterano", "Ursus", "Sarkaz", "Feline", "Canine", "Avian",
+        "Kazimierz", "Higashi", "Sargon", "Minos", "Columbia", "Yan",
+        "Leithanien", "Victoria", "Iberia", "Kjerag", "Rim Billiton",
+        "Healer", "Summoner", "Robot", "Mechanical"
     ],
     purple: [
-        "专三", "没专三过", "满信赖", "限定", "限定6星", "周年庆",
-        "夏活", "赠送", "联动", "女性", "男性", "近战", "远程",
-        "高台", "地面", "医疗或先锋", "医疗或近卫", "医疗或狙击",
-        "医疗或术士", "医疗或重装", "医疗或辅助", "医疗或特种",
-        "先锋或近卫", "先锋或狙击", "先锋或术士", "先锋或重装",
-        "先锋或辅助", "先锋或特种", "近卫或狙击", "近卫或术士",
-        "近卫或重装", "近卫或辅助", "近卫或特种", "狙击或术士",
-        "狙击或重装", "狙击或辅助", "狙击或特种", "术士或重装",
-        "术士或辅助", "术士或特种", "重装或辅助", "重装或特种",
-        "辅助或特种", "非异格"
+        "M3", "Never M3'd", "Max trust", "Limited", "Limited 6★", "Anniversary",
+        "Summer event", "Free", "Collab", "Female", "Male", "Melee", "Ranged",
+        "High ground", "Ground", "Medic or Vanguard", "Medic or Guard", "Medic or Sniper",
+        "Medic or Caster", "Medic or Defender", "Medic or Supporter", "Medic or Specialist",
+        "Vanguard or Guard", "Vanguard or Sniper", "Vanguard or Caster", "Vanguard or Defender",
+        "Vanguard or Supporter", "Vanguard or Specialist", "Guard or Sniper", "Guard or Caster",
+        "Guard or Defender", "Guard or Supporter", "Guard or Specialist", "Sniper or Caster",
+        "Sniper or Defender", "Sniper or Supporter", "Sniper or Specialist", "Caster or Defender",
+        "Caster or Supporter", "Caster or Specialist", "Defender or Supporter", "Defender or Specialist",
+        "Supporter or Specialist", "Non-alter", "Integrated Strategies", "Mirror Ops",
+        "Dual-module", "Hold skill", "Automatic skill"
     ],
     orange: [
-        "非限定", "非限定6星", "非周年庆", "非夏活", "非赠送",
-        "非联动", "精二", "满级", "群攻型", "单体型", "可同时群攻和单体",
-        "技能群攻型", "技能对单型", "攻击距离超过一格", "攻击距离没超过一格",
-        "带攻击回复技能", "带自动回复技能", "带受击回复技能", "带攻击型技能",
-        "带buff型技能", "带全地图范围型技能"
+        "Non-limited", "Non-limited 6★", "Non-anniversary", "Non-summer event", "Non-free",
+        "Non-collab", "Elite 2", "Max level", "AoE type", "Single-target type", "Both AoE and single-target",
+        "Skill AoE type", "Skill single-target type", "Attack range over 1 tile", "Attack range 1 tile or less",
+        "Attack recovery skill", "Auto recovery skill", "On-hit recovery skill", "Attack-type skill",
+        "Buff-type skill", "Global-range skill", "Switch skill", "Healing skill", "Stun skill",
+        "Bind skill", "Physical damage", "Arts damage", "Low DP cost (≤10)", "High DP cost (≥20)",
+        "Summon skill", "Crowd control skill", "Self-buff skill"
     ],
     red: [
-        "蓝色居多", "粉色居多", "红色居多", "黄色居多", "白色居多",
-        "绿色居多", "暖色系", "冷色系", "身高160cm以下", "长角", "没长角",
-        "拥有限定皮肤", "身高160cm以上", "戴手套", "不戴手套", "带餐具",
-        "有尾巴", "没尾巴", "带吃的", "不带吃的", "只有一个皮肤", "没有皮肤",
-        "至少两个皮肤", "光滑的", "使用冷兵器", "使用热兵器", "不使用兵器",
-        "有兵器但不用", "使用多个兵器", "穿铠甲", "穿裙子", "穿帽子", "戴眼镜",
-        "戴口罩", "嘴上叼东西", "有动态皮肤", "蓝色眼睛", "红色眼睛", "闭眼睛",
-        "没头发", "非人型", "岛上有亲戚", "语音声音大", "语音声音小",
-        "2020年以前登岛", "2020年以后登岛", "白头发", "粉头发", "黄头发",
-        "绿头发", "不喜欢说话", "话痨", "有光污染"
-    ],
-    insane: [
-        "光脚", "短袜", "黑丝", "白丝",
-        "高跟鞋", "板鞋", "拖鞋", "长筒靴"
+        "Mostly blue", "Mostly pink", "Mostly red", "Mostly yellow", "Mostly white",
+        "Mostly green", "Warm colors", "Cool colors", "Under 160cm tall", "Has horns", "No horns",
+        "Has limited skin", "Over 160cm tall", "Wears gloves", "No gloves", "Carries utensils",
+        "Has tail", "No tail", "Carries food", "No food", "Only one skin", "No skins",
+        "At least two skins", "Smooth texture", "Uses cold weapons", "Uses firearms", "No weapons",
+        "Has weapons but doesn't use them", "Uses multiple weapons", "Wears armor", "Wears a dress", "Wears a hat", "Wears glasses",
+        "Wears a mask", "Something in mouth", "Has animated skin", "Blue eyes", "Red eyes", "Closed eyes",
+        "No hair", "Non-humanoid", "Relative on the island", "Loud voice lines", "Quiet voice lines",
+        "Joined before 2020", "Joined after 2020", "White hair", "Pink hair", "Blonde hair",
+        "Green hair", "Brown hair", "Black hair", "Purple hair", "Doesn't talk much", "Talkative", "Visual effects heavy",
+        "One eye covered", "Bare arms", "Long sleeves", "Ear visible", "Scarf or cloak"
     ],
     levels: [
-        "当期活动1关", "当期活动2关", "当期活动3关", "当期活动4关",
-        "当期活动5关", "当期活动6关", "当期活动7关", "当期活动8关",
-        "当期活动EX1关", "当期活动EX2关", "当期活动EX3关", "当期活动EX4关",
-        "当期活动EX5关", "当期活动EX6关", "当期活动EX7关", "当期活动EX8关"
+        "Current event Stage 1", "Current event Stage 2", "Current event Stage 3", "Current event Stage 4",
+        "Current event Stage 5", "Current event Stage 6", "Current event Stage 7", "Current event Stage 8",
+        "Current event EX Stage 1", "Current event EX Stage 2", "Current event EX Stage 3", "Current event EX Stage 4",
+        "Current event EX Stage 5", "Current event EX Stage 6", "Current event EX Stage 7", "Current event EX Stage 8",
+        "Current event Story Stage", "Current event Challenge Stage", "Main story latest chapter",
+        "Integrated Strategies floor", "Annihilation", "Module stage", "Training base drill",
+        "Crisis Contract stage", "Recurring event stage", "Side story stage"
     ]
 };

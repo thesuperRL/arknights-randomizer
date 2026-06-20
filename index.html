@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>罗德岛随机挑战终端 // Arknights Challenge Generator</title>
+    <title>Arknights Random Challenge Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,9 +44,9 @@
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-title" id="modalTitle">规则变更提示</div>
-            <div class="modal-message" id="modalMessage">当前规则已更新：包括皮肤和立绘</div>
-            <button class="modal-close" id="modalClose">确认 / CONFIRM</button>
+            <div class="modal-title" id="modalTitle">Rule Change Notice</div>
+            <div class="modal-message" id="modalMessage">Rule updated: skins and illustrations included</div>
+            <button class="modal-close" id="modalClose">CONFIRM</button>
         </div>
     </div>
 
@@ -58,10 +58,13 @@
 
         <header class="mb-10 flex justify-between items-end border-b border-ark-panel pb-4 flex-wrap gap-4">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-wider uppercase text-ark-cyan glitch-text">PRTS 随机挑战终端</h1>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-wider uppercase text-ark-cyan glitch-text">PRTS Random Challenge Terminal</h1>
                 <p class="text-ark-muted text-sm mt-1">Rhodes Island Tactical System // Ver 2.4.0</p>
             </div>
             <div class="flex items-center gap-3">
+                <a id="main-site-link" href="https://thesuperrl.github.io/arknights-website/" class="hidden md:flex items-center gap-2 bg-ark-panel border border-ark-yellow px-5 py-3 rounded text-base hover:bg-ark-yellow/10 transition-colors text-ark-yellow">
+                    <span>← Tier Lists &amp; Team Builder</span>
+                </a>
                 <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="hidden md:flex items-center gap-2 bg-ark-panel border border-ark-cyan px-5 py-3 rounded text-base hover:bg-ark-cyan/10 transition-colors">
                     <svg class="w-6 h-6 text-ark-cyan" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
@@ -69,28 +72,27 @@
                         <path d="M6 1V8"></path>
                         <path d="M10 1V8"></path>
                     </svg>
-                    <span>作者主页</span>
+                    <span>Author Page</span>
                 </a>
                 <div class="text-right">
-                     <div class="text-xs text-ark-yellow font-bold animate-pulse">/// 正在等待指令 ///</div>
+                     <div class="text-xs text-ark-yellow font-bold animate-pulse">/// AWAITING COMMAND ///</div>
                      <div class="text-xs text-ark-muted">ID: DR.DOCTOR</div>
                 </div>
             </div>
         </header>
 
         <div class="border-l-4 border-ark-yellow pl-4 bg-ark-panel/50 p-3 mb-6">
-            <h2 class="text-ark-muted text-sm uppercase tracking-widest mb-1">选择挑战难度</h2>
+            <h2 class="text-ark-muted text-sm uppercase tracking-widest mb-1">Select Difficulty</h2>
             <select id="difficulty-select" class="bg-ark-panel border border-ark-cyan text-ark-text px-4 py-2 rounded font-mono text-2xl font-bold uppercase w-full focus:outline-none focus:ring-2 focus:ring-ark-cyan">
-                <option value="easy" class="difficulty-option-easy">简单级限制作战</option>
-                <option value="normal" class="difficulty-option-normal">普通级限制作战</option>
-                <option value="hard" class="difficulty-option-hard">困难级限制作战</option>
-                <option value="insane" class="difficulty-option-insane">变态级限制作战</option>
+                <option value="easy" class="difficulty-option-easy">Easy Tier</option>
+                <option value="normal" class="difficulty-option-normal">Normal Tier</option>
+                <option value="hard" class="difficulty-option-hard">Hard Tier</option>
             </select>
         </div>
 
         <div class="bg-ark-panel/50 border border-ark-panel rounded p-4 mb-6">
             <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战规则说明
+                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Challenge Rules
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="flex items-center gap-4">
@@ -98,26 +100,26 @@
                         <input type="checkbox" checked id="skinIllustSwitch">
                         <span class="toggle-slider"></span>
                     </label>
-                    <span class="text-sm">包括皮肤和立绘</span>
+                    <span class="text-sm">Include skins and illustrations</span>
                 </div>
                 <div class="flex items-center gap-4">
                     <label class="toggle-switch">
                         <input type="checkbox" checked id="unownedSkinSwitch">
                         <span class="toggle-slider"></span>
                     </label>
-                    <span class="text-sm">包括未拥有的皮肤</span>
+                    <span class="text-sm">Include unowned skins</span>
                 </div>
             </div>
         </div>
 
         <div id="initial-tip" class="text-center py-8">
-            <p class="text-ark-muted text-lg">选择难度后，点击下方按钮抽取关卡或限制条件</p>
+            <p class="text-ark-muted text-lg">Select a difficulty, then use the buttons below to draw a stage or restrictions</p>
         </div>
 
         <div id="result-panel" class="hidden space-y-6">
             <div>
                 <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                    <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战限制条件
+                    <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Challenge Restrictions
                 </h3>
                 <div id="constraints-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
@@ -129,6 +131,9 @@
                 <span class="typing-cursor">SYSTEM READY. WAITING FOR INPUT.</span>
             </div>
             <div class="flex gap-4 items-center flex-wrap justify-center">
+                <a id="main-site-link-mobile" href="https://thesuperrl.github.io/arknights-website/" class="md:hidden flex items-center gap-2 bg-ark-panel border border-ark-yellow px-5 py-3 rounded text-base hover:bg-ark-yellow/10 transition-colors text-ark-yellow">
+                    <span>← Tier Lists</span>
+                </a>
                 <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="md:hidden flex items-center gap-2 bg-ark-panel border border-ark-cyan px-5 py-3 rounded text-base hover:bg-ark-cyan/10 transition-colors">
                     <svg class="w-6 h-6 text-ark-cyan" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
@@ -136,14 +141,14 @@
                         <path d="M6 1V8"></path>
                         <path d="M10 1V8"></path>
                     </svg>
-                    <span>作者主页</span>
+                    <span>Author Page</span>
                 </a>
                 <button id="generate-constraints-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
-                    <span class="relative z-10">抽取条件</span>
+                    <span class="relative z-10">Draw Restrictions</span>
                     <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                 </button>
                 <button id="generate-level-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
-                    <span class="relative z-10">抽取关卡</span>
+                    <span class="relative z-10">Draw Stage</span>
                     <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                 </button>
             </div>
@@ -151,16 +156,16 @@
 
         <div class="mt-6">
             <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>演算历史
+                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Operation History
             </h3>
             <div id="history-panel" class="bg-ark-panel/50 rounded border border-ark-panel p-4 space-y-2">
-                <p class="text-ark-muted text-center" id="empty-history">暂无演算记录</p>
+                <p class="text-ark-muted text-center" id="empty-history">No operation records</p>
             </div>
         </div>
     </main>
 
     <footer class="fixed bottom-2 w-full text-center text-ark-muted text-xs z-20 pointer-events-none">
-        <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="text-ark-cyan hover:underline pointer-events-auto">哔哩哔哩关注朝阳逆光喵，谢谢喵</a>
+        <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="text-ark-cyan hover:underline pointer-events-auto">Follow on Bilibili — thanks!</a>
     </footer>
 
     <script type="module" src="js/main.js"></script>

@@ -19,9 +19,9 @@ export const renderLevel = (level, levelContainer) => {
             ${iconSvg}
         </div>
         <h3 class="text-ark-cyan text-sm font-bold mb-2 flex items-center">
-            <span class="w-2 h-2 bg-ark-cyan mr-2"></span>挑战关卡
+            <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Challenge Stage
         </h3>
-        <p class="text-lg ${getColorClass(level.color)}">挑战关卡【${level.text}】</p>
+        <p class="text-lg ${getColorClass(level.color)}">Stage: [${level.text}]</p>
     `;
 
     levelContainer.appendChild(levelEl);
@@ -37,14 +37,14 @@ export const renderConstraints = (constraints, constraintsContainer) => {
 
         let textPrefix, iconSvg;
         if (constraint.type === 'allow') {
-            textPrefix = '只能使用';
+            textPrefix = 'Only use';
             iconSvg = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ark-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
             `;
         } else {
-            textPrefix = '禁止使用';
+            textPrefix = 'Cannot use';
             iconSvg = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ark-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -57,9 +57,9 @@ export const renderConstraints = (constraints, constraintsContainer) => {
                 ${iconSvg}
             </div>
             <h3 class="text-ark-cyan text-sm font-bold mb-2 flex items-center">
-                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>限制条件 ${index + 1}
+                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Restriction ${index + 1}
             </h3>
-            <p class="text-lg ${getColorClass(constraint.color)}">${textPrefix}【${constraint.text}】干员</p>
+            <p class="text-lg ${getColorClass(constraint.color)}">${textPrefix} [${constraint.text}] operators</p>
         `;
 
         constraintsContainer.appendChild(constraintEl);
@@ -71,7 +71,7 @@ export const renderHistory = (historyPanel) => {
     historyPanel.innerHTML = '';
 
     if (state.historyRecords.length === 0) {
-        historyPanel.innerHTML = '<p class="text-ark-muted text-center" id="empty-history">暂无演算记录</p>';
+        historyPanel.innerHTML = '<p class="text-ark-muted text-center" id="empty-history">No operation records</p>';
         return;
     }
 
@@ -81,8 +81,8 @@ export const renderHistory = (historyPanel) => {
         recordEl.className = 'border-b border-ark-panel pb-2 last:border-0 last:pb-0';
 
         const constraintsHtml = `
-            <p class="text-xs ${getColorClass(record.constraints[0].color)} mt-1">▸ 限制条件：${record.constraints.map(c => (c.type === 'allow' ? '只能使用' : '禁止使用') + '【' + c.text + '】').join('、')}</p>
-            <p class="text-xs ${getColorClass(record.level.color)} mt-1">▸ 关卡：挑战关卡【${record.level.text}】</p>
+            <p class="text-xs ${getColorClass(record.constraints[0].color)} mt-1">▸ Restrictions: ${record.constraints.map(c => (c.type === 'allow' ? 'Only use' : 'Cannot use') + ' [' + c.text + ']').join(', ')}</p>
+            <p class="text-xs ${getColorClass(record.level.color)} mt-1">▸ Stage: [${record.level.text}]</p>
         `;
 
         recordEl.innerHTML = `
