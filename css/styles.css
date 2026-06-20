@@ -151,6 +151,22 @@ body::before {
     margin: 0 auto;
 }
 
+.page-credit {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+}
+
+.page-credit a {
+    color: var(--text-light);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.page-credit a:hover {
+    color: var(--accent-1);
+}
+
 .card {
     background: var(--surface);
     backdrop-filter: blur(12px);

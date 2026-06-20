@@ -1,4 +1,5 @@
 import { getColorClass, getDifficultyInfo } from './config/constants.js';
+import { formatConstraint, formatLevel, isAllowConstraint } from './utils/formatConstraint.js';
 import { state } from './state.js';
 
 export const renderLevel = (level, levelContainer) => {
@@ -20,7 +21,7 @@ export const renderLevel = (level, levelContainer) => {
             <span class="section-marker"></span>
             Challenge Stage
         </h3>
-        <p class="result-card-body ${getColorClass(level.color)}">Stage: [${level.text}]</p>
+        <p class="result-card-body ${getColorClass(level.color)}">${formatLevel(level)}</p>
     `;
 
     levelContainer.appendChild(levelEl);
@@ -34,22 +35,14 @@ export const renderConstraints = (constraints, constraintsContainer) => {
         const constraintEl = document.createElement('div');
         constraintEl.className = 'result-card';
 
-        let textPrefix, iconSvg;
-        if (constraint.type === 'allow') {
-            textPrefix = 'Only use';
-            iconSvg = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: var(--accent-2)">
+        const allowed = isAllowConstraint(constraint);
+        const iconSvg = allowed
+            ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: var(--accent-2)">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-            `;
-        } else {
-            textPrefix = 'Cannot use';
-            iconSvg = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: var(--tier-ex)">
+               </svg>`
+            : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: var(--tier-ex)">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            `;
-        }
+               </svg>`;
 
         constraintEl.innerHTML = `
             <div class="result-card-icon">${iconSvg}</div>
@@ -57,7 +50,7 @@ export const renderConstraints = (constraints, constraintsContainer) => {
                 <span class="section-marker"></span>
                 Restriction ${index + 1}
             </h3>
-            <p class="result-card-body ${getColorClass(constraint.color)}">${textPrefix} [${constraint.text}] operators</p>
+            <p class="result-card-body ${getColorClass(constraint.color)}">${formatConstraint(constraint)}</p>
         `;
 
         constraintsContainer.appendChild(constraintEl);
@@ -79,8 +72,8 @@ export const renderHistory = (historyPanel) => {
         recordEl.className = 'history-item';
 
         const constraintsHtml = `
-            <p class="history-detail ${getColorClass(record.constraints[0].color)}">Restrictions: ${record.constraints.map(c => (c.type === 'allow' ? 'Only use' : 'Cannot use') + ' [' + c.text + ']').join(', ')}</p>
-            <p class="history-detail ${getColorClass(record.level.color)}">Stage: [${record.level.text}]</p>
+            <p class="history-detail ${getColorClass(record.constraints[0].color)}">${record.constraints.map(c => formatConstraint(c)).join('; ')}</p>
+            <p class="history-detail ${getColorClass(record.level.color)}">${formatLevel(record.level)}</p>
         `;
 
         recordEl.innerHTML = `

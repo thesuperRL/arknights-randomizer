@@ -1,5 +1,5 @@
 import { difficultyColorMap } from './config/constants.js';
-import { MAIN_SITE_URL } from './config/site.js';
+import { MAIN_SITE_URL, ORIGINAL_AUTHOR } from './config/site.js';
 import { generateLevel, generateConstraints } from './generators.js';
 import { renderLevel, renderConstraints, addToHistory } from './render.js';
 import { state } from './state.js';
@@ -24,6 +24,18 @@ const generateConstraintsBtn = document.getElementById('generate-constraints-btn
 for (const id of ['nav-logo', 'nav-home', 'footer-home']) {
     const link = document.getElementById(id);
     if (link) link.href = MAIN_SITE_URL;
+}
+
+for (const id of ['original-author-link', 'original-author-bilibili']) {
+    const link = document.getElementById(id);
+    if (link) {
+        link.href = ORIGINAL_AUTHOR.bilibiliUrl;
+        if (id === 'original-author-bilibili') {
+            link.textContent = `Original author: ${ORIGINAL_AUTHOR.name} (Bilibili)`;
+        } else {
+            link.textContent = ORIGINAL_AUTHOR.name;
+        }
+    }
 }
 
 const { showModal, hideModal } = createModal({ modalOverlay, modalTitle, modalMessage });

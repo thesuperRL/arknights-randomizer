@@ -2,6 +2,8 @@
 
 PRTS Random Challenge Terminal — generate random Arknights challenge runs.
 
+**Credit:** This tool was originally created by [朝阳逆光](https://space.bilibili.com/626916563). This repo hosts an English localization and reskin aligned with the [arknights-website](https://github.com/thesuperRL/arknights-website) tier lists site.
+
 ## Live site
 
 - **GitHub Pages:** https://thesuperrl.github.io/arknights-randomizer/
