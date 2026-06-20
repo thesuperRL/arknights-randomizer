@@ -26,10 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare site artifact
+        run: |
+          mkdir site
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'site' ./ site/
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site
 
       - name: Deploy to GitHub Pages
         id: deploy

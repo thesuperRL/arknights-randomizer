@@ -10,7 +10,7 @@ const initialTip = document.getElementById('initial-tip');
 const resultPanel = document.getElementById('result-panel');
 const levelContainer = document.getElementById('level-container');
 const constraintsContainer = document.getElementById('constraints-container');
-const typingCursor = document.querySelector('.typing-cursor');
+const statusText = document.getElementById('status-text');
 const historyPanel = document.getElementById('history-panel');
 const skinIllustSwitch = document.getElementById('skinIllustSwitch');
 const unownedSkinSwitch = document.getElementById('unownedSkinSwitch');
@@ -21,7 +21,7 @@ const modalClose = document.getElementById('modalClose');
 const generateLevelBtn = document.getElementById('generate-level-btn');
 const generateConstraintsBtn = document.getElementById('generate-constraints-btn');
 
-for (const id of ['main-site-link', 'main-site-link-mobile']) {
+for (const id of ['nav-logo', 'nav-home', 'footer-home']) {
     const link = document.getElementById(id);
     if (link) link.href = MAIN_SITE_URL;
 }
@@ -30,7 +30,11 @@ const { showModal, hideModal } = createModal({ modalOverlay, modalTitle, modalMe
 
 const setDifficultySelectColor = (value) => {
     if (!difficultySelect) return;
-    difficultySelect.style.color = difficultyColorMap[value] || '#E0E0E0';
+    difficultySelect.style.color = difficultyColorMap[value] || '#F2F2F2';
+};
+
+const setStatus = (message) => {
+    if (statusText) statusText.textContent = message;
 };
 
 difficultySelect.addEventListener('change', (e) => {
@@ -40,7 +44,7 @@ difficultySelect.addEventListener('change', (e) => {
     state.currentConstraints = null;
     resultPanel.classList.add('hidden');
     initialTip.classList.remove('hidden');
-    typingCursor.textContent = "DIFFICULTY UPDATED. PLEASE REGENERATE.";
+    setStatus('Difficulty updated. Draw a new stage or restrictions.');
 });
 
 skinIllustSwitch.addEventListener('change', () => {
@@ -73,7 +77,7 @@ generateLevelBtn.addEventListener('click', () => {
     const level = generateLevel();
     renderLevel(level, levelContainer);
 
-    typingCursor.textContent = "STAGE GENERATED. " + new Date().toLocaleTimeString();
+    setStatus('Stage generated at ' + new Date().toLocaleTimeString() + '.');
 
     if (state.currentConstraints) {
         addToHistory(historyPanel);
@@ -87,7 +91,7 @@ generateConstraintsBtn.addEventListener('click', () => {
     const constraints = generateConstraints();
     renderConstraints(constraints, constraintsContainer);
 
-    typingCursor.textContent = "RESTRICTIONS GENERATED. " + new Date().toLocaleTimeString();
+    setStatus('Restrictions generated at ' + new Date().toLocaleTimeString() + '.');
 
     if (state.currentLevel) {
         addToHistory(historyPanel);

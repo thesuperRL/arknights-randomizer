@@ -3,170 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Arknights Random Challenge Terminal</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Random Challenge — Arknights Tier Lists</title>
+    <link rel="icon" href="https://arknights.wiki.gg/images/Skill-Shu1.png?a7f99f" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ark: {
-                            bg: '#121212',
-                            dark: '#1a1a1a',
-                            panel: '#222222',
-                            cyan: '#00ADB5',
-                            yellow: '#F7C74A',
-                            red: '#E74C3C',
-                            pink: '#FF69B4',
-                            text: '#E0E0E0',
-                            muted: '#7A7A7A'
-                        }
-                    },
-                    fontFamily: {
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
-                    boxShadow: {
-                        'neon-cyan': '0 0 10px rgba(0, 173, 181, 0.5), 0 0 20px rgba(0, 173, 181, 0.3)',
-                        'neon-yellow': '0 0 10px rgba(247, 199, 74, 0.5)',
-                        'neon-pink': '0 0 10px rgba(255, 105, 180, 0.5), 0 0 20px rgba(255, 105, 180, 0.3)',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-ark-bg text-ark-text font-mono min-h-screen flex flex-col items-center p-4 relative overflow-y-auto pb-20">
-    <div class="absolute inset-0 bg-scanlines pointer-events-none"></div>
-    <div class="absolute top-0 left-0 w-full h-1 bg-ark-cyan opacity-50 shadow-neon-cyan"></div>
-    <div class="absolute bottom-0 right-0 w-3/4 h-64 bg-ark-cyan opacity-5 blur-[150px] rounded-full pointer-events-none"></div>
+<body>
+    <div class="page-wrap">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a id="nav-logo" href="https://thesuperrl.github.io/arknights-website/" class="nav-logo">Arknights Tier Lists</a>
+                <div class="nav-links">
+                    <a id="nav-home" href="https://thesuperrl.github.io/arknights-website/">Home</a>
+                    <span class="nav-current">Randomizer</span>
+                    <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">Author</a>
+                </div>
+            </div>
+        </nav>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <div class="modal-title" id="modalTitle">Rule Change Notice</div>
-            <div class="modal-message" id="modalMessage">Rule updated: skins and illustrations included</div>
-            <button class="modal-close" id="modalClose">CONFIRM</button>
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-content">
+                <div class="modal-title" id="modalTitle">Rule Change Notice</div>
+                <div class="modal-message" id="modalMessage">Rule updated: skins and illustrations included</div>
+                <button class="modal-close" id="modalClose">Confirm</button>
+            </div>
         </div>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1 class="page-title">Random Challenge</h1>
+                <p class="page-subtitle">Generate random stage and squad constraints for fun Arknights runs.</p>
+            </header>
+
+            <section class="card">
+                <p class="section-label">Select Difficulty</p>
+                <select id="difficulty-select" class="difficulty-select" aria-label="Difficulty">
+                    <option value="easy" class="difficulty-option-easy">Easy Tier</option>
+                    <option value="normal" class="difficulty-option-normal">Normal Tier</option>
+                    <option value="hard" class="difficulty-option-hard">Hard Tier</option>
+                </select>
+            </section>
+
+            <section class="card">
+                <h2 class="section-heading">
+                    <span class="section-marker"></span>
+                    Challenge Rules
+                </h2>
+                <div class="rules-grid">
+                    <div class="rule-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="skinIllustSwitch">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span>Include skins and illustrations</span>
+                    </div>
+                    <div class="rule-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="unownedSkinSwitch">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span>Include unowned skins</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div id="initial-tip" class="initial-tip">
+                    <p>Select a difficulty, then draw a stage or restrictions below.</p>
+                </div>
+
+                <div id="result-panel" class="result-panel hidden">
+                    <div>
+                        <h2 class="section-heading">
+                            <span class="section-marker"></span>
+                            Challenge Restrictions
+                        </h2>
+                        <div id="constraints-container" class="result-grid"></div>
+                    </div>
+                    <div id="level-container"></div>
+                </div>
+
+                <div class="divider-row">
+                    <p class="status-text">
+                        <span id="status-text">Ready to generate a challenge.</span>
+                    </p>
+                    <div class="actions-row">
+                        <button id="generate-constraints-btn" class="btn-primary" type="button">Draw Restrictions</button>
+                        <button id="generate-level-btn" class="btn-primary" type="button">Draw Stage</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2 class="section-heading">
+                    <span class="section-marker"></span>
+                    History
+                </h2>
+                <div id="history-panel" class="history-panel">
+                    <p class="empty-history" id="empty-history">No challenges generated yet</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <a id="footer-home" href="https://thesuperrl.github.io/arknights-website/">Back to Tier Lists</a>
+                <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" rel="noopener noreferrer">Follow on Bilibili</a>
+            </div>
+        </footer>
     </div>
-
-    <main class="relative z-20 w-full max-w-3xl border-2 border-ark-panel bg-ark-dark/90 p-6 md:p-10 rounded-lg backdrop-blur-sm shadow-2xl my-auto">
-        <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-ark-cyan"></div>
-        <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-ark-cyan"></div>
-        <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-ark-cyan"></div>
-        <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-ark-cyan"></div>
-
-        <header class="mb-10 flex justify-between items-end border-b border-ark-panel pb-4 flex-wrap gap-4">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-wider uppercase text-ark-cyan glitch-text">PRTS Random Challenge Terminal</h1>
-                <p class="text-ark-muted text-sm mt-1">Rhodes Island Tactical System // Ver 2.4.0</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <a id="main-site-link" href="https://thesuperrl.github.io/arknights-website/" class="hidden md:flex items-center gap-2 bg-ark-panel border border-ark-yellow px-5 py-3 rounded text-base hover:bg-ark-yellow/10 transition-colors text-ark-yellow">
-                    <span>← Tier Lists &amp; Team Builder</span>
-                </a>
-                <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="hidden md:flex items-center gap-2 bg-ark-panel border border-ark-cyan px-5 py-3 rounded text-base hover:bg-ark-cyan/10 transition-colors">
-                    <svg class="w-6 h-6 text-ark-cyan" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                        <path d="M6 1V8"></path>
-                        <path d="M10 1V8"></path>
-                    </svg>
-                    <span>Author Page</span>
-                </a>
-                <div class="text-right">
-                     <div class="text-xs text-ark-yellow font-bold animate-pulse">/// AWAITING COMMAND ///</div>
-                     <div class="text-xs text-ark-muted">ID: DR.DOCTOR</div>
-                </div>
-            </div>
-        </header>
-
-        <div class="border-l-4 border-ark-yellow pl-4 bg-ark-panel/50 p-3 mb-6">
-            <h2 class="text-ark-muted text-sm uppercase tracking-widest mb-1">Select Difficulty</h2>
-            <select id="difficulty-select" class="bg-ark-panel border border-ark-cyan text-ark-text px-4 py-2 rounded font-mono text-2xl font-bold uppercase w-full focus:outline-none focus:ring-2 focus:ring-ark-cyan">
-                <option value="easy" class="difficulty-option-easy">Easy Tier</option>
-                <option value="normal" class="difficulty-option-normal">Normal Tier</option>
-                <option value="hard" class="difficulty-option-hard">Hard Tier</option>
-            </select>
-        </div>
-
-        <div class="bg-ark-panel/50 border border-ark-panel rounded p-4 mb-6">
-            <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Challenge Rules
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex items-center gap-4">
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked id="skinIllustSwitch">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span class="text-sm">Include skins and illustrations</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked id="unownedSkinSwitch">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span class="text-sm">Include unowned skins</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="initial-tip" class="text-center py-8">
-            <p class="text-ark-muted text-lg">Select a difficulty, then use the buttons below to draw a stage or restrictions</p>
-        </div>
-
-        <div id="result-panel" class="hidden space-y-6">
-            <div>
-                <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                    <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Challenge Restrictions
-                </h3>
-                <div id="constraints-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-            </div>
-            <div id="level-container"></div>
-        </div>
-
-        <div class="mt-10 pt-6 border-t border-ark-panel flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-xs text-ark-muted font-mono">
-                <span class="typing-cursor">SYSTEM READY. WAITING FOR INPUT.</span>
-            </div>
-            <div class="flex gap-4 items-center flex-wrap justify-center">
-                <a id="main-site-link-mobile" href="https://thesuperrl.github.io/arknights-website/" class="md:hidden flex items-center gap-2 bg-ark-panel border border-ark-yellow px-5 py-3 rounded text-base hover:bg-ark-yellow/10 transition-colors text-ark-yellow">
-                    <span>← Tier Lists</span>
-                </a>
-                <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="md:hidden flex items-center gap-2 bg-ark-panel border border-ark-cyan px-5 py-3 rounded text-base hover:bg-ark-cyan/10 transition-colors">
-                    <svg class="w-6 h-6 text-ark-cyan" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                        <path d="M6 1V8"></path>
-                        <path d="M10 1V8"></path>
-                    </svg>
-                    <span>Author Page</span>
-                </a>
-                <button id="generate-constraints-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
-                    <span class="relative z-10">Draw Restrictions</span>
-                    <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
-                </button>
-                <button id="generate-level-btn" class="relative group overflow-hidden bg-ark-cyan text-ark-bg font-bold py-3 px-6 tracking-wider uppercase text-base hover:shadow-neon-cyan transition-all duration-300 clip-path-polygon">
-                    <span class="relative z-10">Draw Stage</span>
-                    <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-6">
-            <h3 class="text-ark-cyan text-sm font-bold mb-3 flex items-center">
-                <span class="w-2 h-2 bg-ark-cyan mr-2"></span>Operation History
-            </h3>
-            <div id="history-panel" class="bg-ark-panel/50 rounded border border-ark-panel p-4 space-y-2">
-                <p class="text-ark-muted text-center" id="empty-history">No operation records</p>
-            </div>
-        </div>
-    </main>
-
-    <footer class="fixed bottom-2 w-full text-center text-ark-muted text-xs z-20 pointer-events-none">
-        <a href="https://space.bilibili.com/626916563?spm_id_from=333.1007.0.0" target="_blank" class="text-ark-cyan hover:underline pointer-events-auto">Follow on Bilibili — thanks!</a>
-    </footer>
 
     <script type="module" src="js/main.js"></script>
 </body>
